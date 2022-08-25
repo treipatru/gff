@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+# Import things
+GFZ_FOLDER="$HOME/repos/gfz/lib/"
+
+. "$GFZ_FOLDER/helpers.sh"
+. "$GFZ_FOLDER/modules/add.sh"
+. "$GFZ_FOLDER/modules/checkout.sh"
+. "$GFZ_FOLDER/modules/pull.sh"
+. "$GFZ_FOLDER/modules/push.sh"
+# . "$GFZ_FOLDER/modules/rgi.sh"
+. "$GFZ_FOLDER/modules/switch.sh"
+
+gfz_is_in_git_dir;
+
+COMMAND="$1"
+
+case $COMMAND in
+    "a")
+        gfz_add
+        ;;
+    "co")
+        gfz_checkout
+        ;;
+    "rg")
+        printf "not yet"
+        ;;
+    "pull")
+        gfz_pull
+        ;;
+    "push")
+        gfz_push
+        ;;
+    "sw")
+        gfz_switch
+        ;;
+    *)
+        printf "unknown param"
+esac
