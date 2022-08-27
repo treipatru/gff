@@ -1,8 +1,13 @@
 #!/usr/bin/env bash
 
+. "${GFZ_FOLDER}/finder.sh"
+
 gfz_switch () {
+    FZF_DEFAULT_OPTS+="\
+        --header 'Switch Git branch'\
+    "
+
     git branch -a \
-        | fzf-tmux \
-            -p 90%,90% \
+        | gfz_finder \
         | xargs git switch
 }
