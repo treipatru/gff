@@ -1,39 +1,47 @@
 #!/usr/bin/env bash
 
-# Import things
-GFZ_FOLDER="$HOME/repos/gfz/lib/"
-
-. "$GFZ_FOLDER/helpers.sh"
-. "$GFZ_FOLDER/modules/add.sh"
-. "$GFZ_FOLDER/modules/checkout.sh"
-. "$GFZ_FOLDER/modules/pull.sh"
-. "$GFZ_FOLDER/modules/push.sh"
-# . "$GFZ_FOLDER/modules/rgi.sh"
-. "$GFZ_FOLDER/modules/switch.sh"
-
-gfz_is_in_git_dir;
-
 COMMAND="$1"
+FILE_PARAM="$2"
+GFZ_FOLDER="$(dirname "$0")/../lib"
+. "${GFZ_FOLDER}/helpers.sh"
+. "${GFZ_FOLDER}/modules/add.sh"
+. "${GFZ_FOLDER}/modules/checkout.sh"
+. "${GFZ_FOLDER}/modules/pull.sh"
+. "${GFZ_FOLDER}/modules/push.sh"
+. "${GFZ_FOLDER}/modules/rgi.sh"
+. "${GFZ_FOLDER}/modules/status.sh"
+. "${GFZ_FOLDER}/modules/switch.sh"
+
+gfz_check_environment
 
 case $COMMAND in
-    "a")
+    "ad")
         gfz_add
         ;;
     "co")
         gfz_checkout
         ;;
-    "rg")
-        printf "not yet"
+    "d")
+        git diff
         ;;
-    "pull")
+    "pl")
         gfz_pull
         ;;
-    "push")
+    "ps")
         gfz_push
+        ;;
+    "rg")
+        gfz_rg "${@:2}"
+        ;;
+    "st")
+        gfz_status
         ;;
     "sw")
         gfz_switch
         ;;
+    "toggle_staged")
+        gfz_toggle_staged "${FILE_PARAM}"
+        ;;
     *)
-        printf "unknown param"
+        git "${@:1}"
 esac
