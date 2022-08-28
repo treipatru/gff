@@ -159,3 +159,37 @@ gfz_create_or_switch_branch () {
 
     git switch "$BRANCH"
 }
+
+gfz_get_file_status () {
+    local GIT_OUTPUT
+    local FILE
+    local STATUS
+    GIT_OUTPUT=$1
+    STATUS=${GIT_OUTPUT:0:2}
+    FILE=${GIT_OUTPUT:3}
+    ICON=" "
+
+    # If file is staged just show an icon
+    if [[ ${STATUS:0:1} =~ A|D|M && ${STATUS:1:2} == " " ]]; then
+        ICON="✓"
+    fi
+
+    # If unstaged just show status
+    if [[ ${STATUS:0:1} == " "  && ${STATUS:1:2} =~ A|D|M ]]; then
+        ICON=${STATUS:1:2}
+    fi
+
+    # Special status for untracked
+    if [[ ${STATUS:0:2} == "??" ]]; then
+        ICON="?"
+    fi
+
+    echo "${ICON} ${FILE} ${STATUS}"
+}
+
+gfz_get_repo_status () {
+    git status -s --untracked-files=all \
+        | while IFS= read -r LINE; do
+            gfz h_get_file_status "$LINE"
+        done
+}
