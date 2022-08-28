@@ -27,6 +27,9 @@ gfz_emit_error () {
         "7")
             ERROR_STR="Nothing to add, working tree clean"
             ;;
+        "8")
+            ERROR_STR="Nothing to checkout, working tree clean"
+            ;;
         *)
             ERROR_STR="GFZ encountered an error"
     esac

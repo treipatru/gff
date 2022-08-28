@@ -3,6 +3,13 @@
 . "${GFZ_FOLDER}/finder.sh"
 
 gfz_checkout () {
+    local GFZ_ITEMS
+    GFZ_ITEMS=$(git ls-files -d -m --full-name)
+
+    if [ -z "$GFZ_ITEMS" ]; then
+        gfz_emit_error 8
+    fi
+
     FZF_DEFAULT_OPTS+=" \
         --multi \
         --header 'Checkout modified files' \
@@ -17,7 +24,7 @@ gfz_checkout () {
         --bind 'ctrl-o:execute-silent(code --goto {1})' \
     "
 
-    git ls-files -d -m --full-name \
+    echo "$GFZ_ITEMS" \
         | gfz_finder \
         | xargs git checkout
 }
