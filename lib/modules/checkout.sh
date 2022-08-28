@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-. "${GFZ_FOLDER}/finder.sh"
+. "${GFZ_FOLDER}/helpers.sh"
 
 gfz_checkout () {
     local GFZ_ITEMS

@@ -99,3 +99,12 @@ gfz_commit () {
 has_branch_upstream () {
     git for-each-ref --format='%(upstream:short)' "$(git symbolic-ref -q HEAD)"
 }
+
+gfz_finder () {
+    FZF_DEFAULT_OPTS+="\
+        --header-first \
+    "
+
+    fzf-tmux \
+        -p 90%,90%
+}

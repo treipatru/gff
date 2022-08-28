@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-. "${GFZ_FOLDER}/finder.sh"
+. "${GFZ_FOLDER}/helpers.sh"
 
 gfz_switch () {
     FZF_DEFAULT_OPTS+="\
