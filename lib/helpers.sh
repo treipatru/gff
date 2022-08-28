@@ -33,6 +33,9 @@ gfz_emit_error () {
         "9")
             ERROR_STR="Unknown GFZ editor"
             ;;
+        "10")
+            ERROR_STR="Neither \$EDITOR not \$GFZ_EDITOR are defined. You need at least one in your environment"
+            ;;
         *)
             ERROR_STR="GFZ encountered an error"
     esac
@@ -47,6 +50,11 @@ gfz_check_environment () {
     command -v fzf >/dev/null 2>&1 || gfz_emit_error 2
     command -v bat >/dev/null 2>&1 || gfz_emit_error 3
     command -v rg  >/dev/null 2>&1 || gfz_emit_error 4
+
+
+    if [[ -z "$EDITOR" && -z "$GFZ_EDITOR" ]]; then
+        gfz_emit_error 10
+    fi
 
     # Check for Git repository
     local DIR_CODE
