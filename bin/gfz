@@ -8,6 +8,7 @@ GFZ_FOLDER="$(dirname "$0")/../lib"
 . "${GFZ_FOLDER}/modules/checkout.sh"
 . "${GFZ_FOLDER}/modules/pull.sh"
 . "${GFZ_FOLDER}/modules/push.sh"
+. "${GFZ_FOLDER}/modules/remove.sh"
 . "${GFZ_FOLDER}/modules/rgi.sh"
 . "${GFZ_FOLDER}/modules/status.sh"
 . "${GFZ_FOLDER}/modules/switch.sh"
@@ -35,6 +36,9 @@ case $COMMAND in
         ;;
     "rg")
         gfz_rg "${@:2}"
+        ;;
+    "rm")
+        gfz_remove
         ;;
     "st")
         gfz_status
