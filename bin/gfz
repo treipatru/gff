@@ -30,6 +30,12 @@ case $COMMAND in
     "h_commit")
         gfz_commit
         ;;
+    "h_get_file_status")
+        gfz_get_file_status "${COMMAND_PARAM}"
+        ;;
+    "h_get_repo_status")
+        gfz_get_repo_status
+        ;;
     "h_open_in_editor")
         gfz_open_in_editor "${@:2}"
         ;;
@@ -49,7 +55,7 @@ case $COMMAND in
         gfz_push
         ;;
     "rg")
-        gfz_rg "${@:2}"
+        gfz_rg "${COMMAND_PARAM}"
         ;;
     "rm")
         gfz_remove

@@ -4,7 +4,7 @@
 
 gfz_status () {
     local GFZ_ITEMS
-    GFZ_ITEMS=$(git status -s)
+    GFZ_ITEMS=$(gfz h_get_repo_status)
 
     if [ -z "$GFZ_ITEMS" ]; then
         gfz_emit_error 7
@@ -21,7 +21,8 @@ gfz_status () {
             {2} ' \
         --preview-window up,border-bottom,80%
         --bind 'ctrl-o:execute-silent(gfz h_open_in_editor {2})' \
-        --bind 'tab:execute-silent(gfz h_toggle_staged {2})+reload(git status -s)+down' \
+        --bind 'tab:execute-silent(gfz h_toggle_staged {2})+reload(gfz h_get_repo_status)+down' \
+        --with-nth=1,2
     "
 
     echo "$GFZ_ITEMS" \
