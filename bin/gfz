@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 COMMAND="$1"
-FILE_PARAM="$2"
+COMMAND_PARAM="$2"
 GFZ_FOLDER="$(dirname "$0")/../lib"
 . "${GFZ_FOLDER}/helpers.sh"
 . "${GFZ_FOLDER}/modules/add.sh"
@@ -33,8 +33,11 @@ case $COMMAND in
     "h_open_in_editor")
         gfz_open_in_editor "${@:2}"
         ;;
+    "h_create_or_switch_branch")
+        gfz_create_or_switch_branch "${COMMAND_PARAM}"
+        ;;
     "h_toggle_staged")
-        gfz_toggle_staged "${FILE_PARAM}"
+        gfz_toggle_staged "${COMMAND_PARAM}"
         ;;
     "d")
         git diff
@@ -55,7 +58,7 @@ case $COMMAND in
         gfz_status
         ;;
     "sw")
-        gfz_switch
+        gfz_switch "${COMMAND_PARAM}"
         ;;
     *)
         git "${@:1}"

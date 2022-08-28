@@ -55,7 +55,6 @@ gfz_check_environment () {
     command -v rg  >/dev/null 2>&1 || gfz_emit_error 4
     command -v delta  >/dev/null 2>&1 || gfz_emit_error 11
 
-
     if [[ -z "$EDITOR" && -z "$GFZ_EDITOR" ]]; then
         gfz_emit_error 10
     fi
@@ -146,4 +145,17 @@ gfz_open_in_editor () {
         *)
             gfz_emit_error 9
     esac
+}
+
+gfz_create_or_switch_branch () {
+    local BRANCH
+    BRANCH=$1
+
+    if [[ -z $(git branch --list "${BRANCH}") ]]; then
+        git branch "$BRANCH"
+        git switch "$BRANCH"
+        exit 1
+    fi
+
+    git switch "$BRANCH"
 }
