@@ -12,11 +12,13 @@ gfz_status () {
 
     FZF_DEFAULT_OPTS+="\
         --header 'Toggle staged (TAB) | Commit (Enter)' \
-        --preview 'bat \
-            --style numbers,changes \
-            --color=always \
-            {2} \
-            | head -500' \
+        --preview 'delta \
+            --no-gitconfig \
+            --file-style=\"omit\" \
+            --hunk-header-style=\"\" \
+            --line-numbers \
+            <(git show HEAD:{2}) \
+            {2} ' \
         --preview-window up,border-bottom,80%
         --bind 'ctrl-o:execute-silent(gfz h_open_in_editor {2})' \
         --bind 'enter:execute(gfz h_commit)+abort' \

@@ -36,6 +36,9 @@ gfz_emit_error () {
         "10")
             ERROR_STR="Neither \$EDITOR not \$GFZ_EDITOR are defined. You need at least one in your environment"
             ;;
+        "11")
+            ERROR_STR="Delta is not installed"
+            ;;
         *)
             ERROR_STR="GFZ encountered an error"
     esac
@@ -50,6 +53,7 @@ gfz_check_environment () {
     command -v fzf >/dev/null 2>&1 || gfz_emit_error 2
     command -v bat >/dev/null 2>&1 || gfz_emit_error 3
     command -v rg  >/dev/null 2>&1 || gfz_emit_error 4
+    command -v delta  >/dev/null 2>&1 || gfz_emit_error 11
 
 
     if [[ -z "$EDITOR" && -z "$GFZ_EDITOR" ]]; then
