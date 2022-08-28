@@ -21,6 +21,9 @@ case $COMMAND in
     "co")
         gfz_checkout
         ;;
+    "h_commit")
+        gfz_commit
+        ;;
     "d")
         git diff
         ;;
@@ -39,7 +42,7 @@ case $COMMAND in
     "sw")
         gfz_switch
         ;;
-    "toggle_staged")
+    "h_toggle_staged")
         gfz_toggle_staged "${FILE_PARAM}"
         ;;
     *)

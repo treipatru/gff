@@ -48,6 +48,18 @@ gfz_toggle_staged () {
     fi
 }
 
+gfz_commit () {
+    local STATUS
+    STATUS=$(git diff --name-only --cached)
+
+    if [[ -z "$STATUS" ]]; then
+        echo "» No changes staged. Aborting."
+        exit
+    else
+        git commit --verbose
+    fi
+}
+
 has_branch_upstream () {
     git for-each-ref --format='%(upstream:short)' "$(git symbolic-ref -q HEAD)"
 }
