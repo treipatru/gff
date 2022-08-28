@@ -18,7 +18,7 @@ gfz_status () {
             {2} \
             | head -500' \
         --preview-window up,border-bottom,80%
-        --bind 'ctrl-o:execute-silent(code --goto {2})' \
+        --bind 'ctrl-o:execute-silent(gfz h_open_in_editor {2})' \
         --bind 'enter:execute(gfz h_commit)+abort' \
         --bind 'tab:execute-silent(gfz h_toggle_staged {2})+reload(git status -s)+down' \
     "

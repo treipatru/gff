@@ -30,11 +30,11 @@ gfz_rg () {
         --bind 'change:reload:sleep 0.1; $RG_PREFIX {q} || true' \
         --bind 'ctrl-f:unbind(change,ctrl-f)+change-prompt(░FZF )+enable-search+clear-query+rebind(ctrl-r)' \
         --bind 'ctrl-r:unbind(ctrl-r)+change-prompt(░RG )+disable-search+reload($RG_PREFIX {q} || true)+rebind(change,ctrl-f)' \
-        --bind 'ctrl-o:execute-silent(code --goto {1}:{2})' \
+        --bind 'ctrl-o:execute-silent(gfz h_open_in_editor {1} {2} {3})' \
     "
     FZF_DEFAULT_COMMAND="$RG_PREFIX $(printf %q "$INPUT")"
 
     gfz_finder \
-    | awk -F ":" '{print $1":"$2":"$3}' \
-    | xargs code --goto
+    | awk -F ":" '{print $1, $2, $3}' \
+    | xargs gfz h_open_in_editor
 }

@@ -30,6 +30,9 @@ gfz_emit_error () {
         "8")
             ERROR_STR="Nothing to checkout, working tree clean"
             ;;
+        "9")
+            ERROR_STR="Unknown GFZ editor"
+            ;;
         *)
             ERROR_STR="GFZ encountered an error"
     esac
@@ -107,4 +110,28 @@ gfz_finder () {
 
     fzf-tmux \
         -p 90%,90%
+}
+
+gfz_open_in_editor () {
+    local FILE
+    local LINE
+    local COLUMN
+
+    FILE=$1
+    LINE=$2
+    COLUMN=$3
+
+    case $GFZ_EDITOR in
+        "code")
+            code --goto "$FILE":"$LINE":"$COLUMN"
+            ;;
+        "nvim")
+            nvim "$FILE" +"$LINE"
+            ;;
+        "vim")
+            vim +"'call cursor(${LINE},${COLUMN})" "$FILE"
+            ;;
+        *)
+            gfz_emit_error 9
+    esac
 }

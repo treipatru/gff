@@ -15,6 +15,11 @@ GFZ_FOLDER="$(dirname "$0")/../lib"
 
 gfz_check_environment
 
+export GFZ_EDITOR="code"
+if [[ -z "$GFZ_EDITOR" ]]; then
+    GFZ_EDITOR=$(basename "$EDITOR")
+fi
+
 case $COMMAND in
     "ad")
         gfz_add
@@ -24,6 +29,12 @@ case $COMMAND in
         ;;
     "h_commit")
         gfz_commit
+        ;;
+    "h_open_in_editor")
+        gfz_open_in_editor "${@:2}"
+        ;;
+    "h_toggle_staged")
+        gfz_toggle_staged "${FILE_PARAM}"
         ;;
     "d")
         git diff
@@ -45,9 +56,6 @@ case $COMMAND in
         ;;
     "sw")
         gfz_switch
-        ;;
-    "h_toggle_staged")
-        gfz_toggle_staged "${FILE_PARAM}"
         ;;
     *)
         git "${@:1}"

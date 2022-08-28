@@ -15,7 +15,7 @@ gfz_remove () {
             {1} \
             | head -500' \
         --preview-window up,border-bottom,80%
-        --bind 'ctrl-o:execute-silent(code --goto {1})' \
+        --bind 'ctrl-o:execute-silent(gfz h_open_in_editor {1})' \
     "
 
     echo "$GFZ_ITEMS" \
