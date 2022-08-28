@@ -21,10 +21,12 @@ gfz_status () {
             {2} ' \
         --preview-window up,border-bottom,80%
         --bind 'ctrl-o:execute-silent(gfz h_open_in_editor {2})' \
-        --bind 'enter:execute(gfz h_commit)+abort' \
         --bind 'tab:execute-silent(gfz h_toggle_staged {2})+reload(git status -s)+down' \
     "
 
     echo "$GFZ_ITEMS" \
-        | gfz_finder
+        | gfz_finder \
+        | xargs gfz h_commit
+    # h_commit doesn't need args but we use xargs to wait for fzf to finish
+    # binding enter to `:execute-silent(gfz h_commit) causes the tmux popup to bug
 }
