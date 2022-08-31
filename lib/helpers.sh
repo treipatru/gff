@@ -171,7 +171,7 @@ gfz_get_file_status () {
     ICON=" "
 
     # If file is staged just show an icon
-    if [[ ${STATUS:0:1} =~ A|D|M && ${STATUS:1:2} == " " ]]; then
+    if [[ ${STATUS:0:1} =~ A|D|M|R && ${STATUS:1:2} == " " ]]; then
         ICON="✓"
     fi
 
