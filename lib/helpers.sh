@@ -117,6 +117,7 @@ has_branch_upstream () {
 gfz_finder () {
     FZF_DEFAULT_OPTS+="\
         --header-first \
+        --bind backward-eof:abort \
     "
 
     fzf-tmux \
