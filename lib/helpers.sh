@@ -197,9 +197,18 @@ gfz_get_repo_status () {
 
 
 gfz_apply () {
-    for PATCH in "$@"; do
-        # TODO: awk match every column that has CHUNK
-        git apply --cached < "$PATCH"
+    local PATCH_FILES
+    # Only files with _CHUNK_ in filename should be staged
+    PATCH_FILES=$(echo "$@" | awk '{
+        for(i=1;i<=NF;i++) {
+            if ($i ~ /[_CHUNK_]/) {
+                print $i
+            }
+        }
+    }')
+
+    for PATCH_FILE in $PATCH_FILES; do
+        git apply --cached < "$PATCH_FILE"
     done
 }
 
