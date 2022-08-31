@@ -28,6 +28,7 @@ gfz_status () {
     echo "$GFZ_ITEMS" \
         | gfz_finder \
         | xargs gfz h_commit
+    # FIX
     # h_commit doesn't need args but we use xargs to wait for fzf to finish
     # binding enter to `:execute-silent(gfz h_commit) causes the tmux popup to bug
 }
