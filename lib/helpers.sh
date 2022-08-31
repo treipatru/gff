@@ -194,3 +194,26 @@ gfz_get_repo_status () {
             gfz h_get_file_status "$LINE"
         done
 }
+
+
+gfz_apply () {
+    for PATCH in "$@"; do
+        # TODO: awk match every column that has CHUNK
+        git apply --cached < "$PATCH"
+    done
+}
+
+gfz_get_diff_region () {
+    local CHUNK_HEADER
+    local REMOVED
+    local ADDED
+
+    CHUNK_HEADER=$1
+    # Remove minus sign from start of string
+    REMOVED=$(echo "$CHUNK_HEADER" | awk '{print substr($2,2)}')
+    # Remove plus sign from start of string, add number of modified lines to start of added
+    ADDED=$(echo "$CHUNK_HEADER" | awk '{print substr($3,2)}' | awk -F "," '{print $1+$2}')
+
+    # Return diff region: "First line" "Last line"
+    echo "${REMOVED%%,*} ${ADDED}"
+}

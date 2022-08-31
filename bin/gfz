@@ -27,8 +27,14 @@ case $COMMAND in
     "co")
         gfz_checkout
         ;;
+    "h_apply")
+        gfz_apply "${@:2}"
+        ;;
     "h_commit")
         gfz_commit
+        ;;
+    "h_get_diff_region")
+        gfz_get_diff_region "${COMMAND_PARAM}"
         ;;
     "h_get_file_status")
         gfz_get_file_status "${COMMAND_PARAM}"
