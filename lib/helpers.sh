@@ -114,16 +114,6 @@ has_branch_upstream () {
     git for-each-ref --format='%(upstream:short)' "$(git symbolic-ref -q HEAD)"
 }
 
-gfz_finder () {
-    FZF_DEFAULT_OPTS+="\
-        --header-first \
-        --bind backward-eof:abort \
-    "
-
-    fzf-tmux \
-        -p 90%,90%
-}
-
 gfz_open_in_editor () {
     local FILE
     local LINE
@@ -194,7 +184,6 @@ gfz_get_repo_status () {
             gfz h_get_file_status "$LINE"
         done
 }
-
 
 gfz_apply () {
     local PATCH_FILES
