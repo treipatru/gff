@@ -3,22 +3,30 @@
 . "${GFZ_FOLDER}/helpers.sh"
 
 gfz_remove () {
-    local GFZ_ITEMS
-    GFZ_ITEMS=$(git ls-tree --full-tree -r --name-only HEAD)
+    local FZF_INPUT
+    local FZF_OUTPUT
 
-    FZF_DEFAULT_OPTS+="\
-        --multi
-        --header 'Git rm files' \
-        --preview 'bat \
-            --style numbers,changes \
-            --color=always \
-            {1} \
-            | head -500' \
-        --preview-window up,border-bottom,80%
-        --bind 'ctrl-o:execute-silent(gfz h_open_in_editor {1})' \
-    "
+    FZF_INPUT=$(git ls-tree --full-tree -r --name-only HEAD)
 
-    echo "$GFZ_ITEMS" \
-        | gfz_finder \
-        | xargs git rm
+    FZF_OUTPUT=$(echo "$FZF_INPUT" \
+        | fzf-tmux \
+            -p 90%,90% \
+            --bind 'ctrl-o:execute-silent(gfz h_open_in_editor {1})' \
+            --header-first \
+            --header 'Git rm files' \
+            --multi \
+            --preview 'bat \
+                --style numbers,changes \
+                --color=always \
+                {1} \
+                | head -500' \
+            --preview-window up,border-bottom,80%
+    )
+
+
+    if [[ -z $FZF_OUTPUT ]]; then
+        exit 0
+    fi
+
+    echo "$FZF_OUTPUT" | xargs git rm
 }

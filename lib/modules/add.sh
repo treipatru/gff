@@ -6,6 +6,7 @@ gfz_add () {
     local GFZ_DIFF_FOLDER
     local GFZ_ITEMS
     local FZF_ITEMS_FILE
+    local FZF_SELECTION
     GFZ_ITEMS=$(git ls-files -d -m -o --exclude-standard --full-name)
     GFZ_DIFF_FOLDER="/tmp/gfz_diff"
     FZF_ITEMS_FILE="${GFZ_DIFF_FOLDER}/FZF_ITEMS"
@@ -71,23 +72,23 @@ gfz_add () {
         done
     done
 
-    # 4 feed list to FZF
-    FZF_DEFAULT_OPTS+=" \
-        --header 'Stage chunks' \
-        --preview 'bat \
-            --style numbers,changes \
-            --color=always \
-            --line-range {2}:{3} \
-            {1} \
-            | head -500' \
-        --preview-window up,border-bottom,80%
-        --bind 'ctrl-o:execute-silent(gfz h_open_in_editor {1})' \
-        --bind 'enter:execute(gfz h_apply {4})+abort' \
-        --with-nth=1,2,3
-    "
+    FZF_SELECTION=$(cat $FZF_ITEMS_FILE \
+        | fzf-tmux \
+            -p 90%,90% \
+            --bind 'ctrl-o:execute-silent(gfz h_open_in_editor {1})' \
+            --bind backward-eof:abort \
+            --header 'Stage chunks' \
+            --header-first \
+            --multi \
+            --preview 'bat \
+                --style numbers,changes \
+                --color=always \
+                --line-range {2}:{3} \
+                {1} \
+                | head -500' \
+            --preview-window up,border-bottom,80% \
+            --with-nth=1,2,3 \
+        )
 
-    # TODO turn to multi and pass all selection to xargs
-    # instead of binding enter
-    cat $FZF_ITEMS_FILE \
-        | gfz_finder
+    echo "$FZF_SELECTION" | xargs gfz h_apply
 }

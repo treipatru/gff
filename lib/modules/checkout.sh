@@ -3,28 +3,35 @@
 . "${GFZ_FOLDER}/helpers.sh"
 
 gfz_checkout () {
-    local GFZ_ITEMS
-    GFZ_ITEMS=$(git ls-files -d -m --full-name)
+    local FZF_INPUT
+    local FZF_OUTPUT
 
-    if [ -z "$GFZ_ITEMS" ]; then
+    FZF_INPUT=$(git ls-files -d -m --full-name | uniq)
+
+    if [ -z "$FZF_INPUT" ]; then
         gfz_emit_error 8
     fi
 
-    FZF_DEFAULT_OPTS+=" \
-        --multi \
-        --header 'Checkout modified files' \
-        --preview 'bat \
-            --diff \
-            --diff-context=3 \
-            --style numbers,changes \
-            --color=always \
-            {} \
-            | head -500' \
-        --preview-window up,border-bottom,80%
-        --bind 'ctrl-o:execute-silent(gfz h_open_in_editor {1})' \
-    "
+    FZF_OUTPUT=$(echo "$FZF_INPUT" \
+        | fzf-tmux \
+            --bind 'ctrl-o:execute-silent(gfz h_open_in_editor {1})' \
+            --header-first \
+            --header 'Checkout modified files' \
+            --multi \
+            --preview 'bat \
+                --diff \
+                --diff-context=3 \
+                --style numbers,changes \
+                --color=always \
+                {} \
+                | head -500' \
+            --preview-window up,border-bottom,80%
+    )
 
-    echo "$GFZ_ITEMS" \
-        | gfz_finder \
-        | xargs git checkout
+
+    if [[ -z $FZF_OUTPUT ]]; then
+        exit 0
+    fi
+
+    echo "$FZF_OUTPUT" | xargs git checkout
 }
