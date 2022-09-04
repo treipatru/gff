@@ -2,12 +2,9 @@
 
 . "${GFZ_FOLDER}/helpers.sh"
 
-gfz_add () {
-    local GFZ_DIFF_FOLDER
-    local GFZ_ITEMS
-    local FZF_ITEMS_FILE
-    local FZF_SELECTION
-    GFZ_ITEMS=$(git ls-files -d -m -o --exclude-standard --full-name)
+gfz_chunk () {
+    local GFZ_DIFF_FOLDER GFZ_ITEMS FZF_ITEMS_FILE FZF_SELECTION
+    GFZ_ITEMS=$(git diff --name-only --diff-filter=MA)
     GFZ_DIFF_FOLDER="/tmp/gfz_diff"
     FZF_ITEMS_FILE="${GFZ_DIFF_FOLDER}/FZF_ITEMS"
 
@@ -26,22 +23,18 @@ gfz_add () {
 
     # 2 iterate through status items and
     echo "$GFZ_ITEMS" | while IFS= read -r LINE; do
-        local FOLDER
-        local FILE
+        local FOLDER FILE
         FOLDER="${GFZ_DIFF_FOLDER}/$(echo "$LINE" | sed -r 's/[/. ]+/-/g')"
         FILE=$(basename "$LINE")
 
         # Generate a folder for each file
         mkdir "$FOLDER"
         # Generate a main diff file for each file
-        git diff-files --patch --unified=3 --output="$FOLDER"/"$FILE" "$LINE"
+        git diff-files --patch --unified=0 --output="$FOLDER"/"$FILE" "$LINE"
         # Generate patch files for each patch
 
         rg '^@@.*@@' --line-number "$FOLDER"/"$FILE" | while IFS= read -r LINE2; do
-            local CHUNK_FILE
-            local CHUNK_LINE
-            local NEXT_LINE
-            local DIFF_REGION
+            local CHUNK_FILE CHUNK_LINE NEXT_LINE DIFF_REGION
             # Generate a unique file identifier from chunk meta and append that to $FILE
             # 5:@@ -1,20 +1,50 @@ > 120150
             CHUNK_FILE="${FOLDER}/${FILE}_CHUNK_$(echo "$LINE2" | awk '{print $2,$3}' | sed 's/[+, -]//g')"
@@ -80,15 +73,21 @@ gfz_add () {
             --header 'Stage chunks' \
             --header-first \
             --multi \
-            --preview 'bat \
-                --style numbers,changes \
-                --color=always \
-                --line-range {2}:{3} \
-                {1} \
-                | head -500' \
+            --preview 'delta \
+                --no-gitconfig \
+                --file-style=\"omit\" \
+                --hunk-header-style=\"\" \
+                <(gfz h_get_region {1} {2} {3} TRUE) \
+                <(gfz h_get_region {1} {2} {3}) '\
             --preview-window up,border-bottom,80% \
             --with-nth=1,2,3 \
         )
 
-    echo "$FZF_SELECTION" | xargs gfz h_apply
+    if [[ -z $FZF_SELECTION ]]; then
+        exit 0
+    fi
+
+    echo "$FZF_SELECTION" \
+        | xargs gfz h_apply \
+        && gfz h_commit
 }

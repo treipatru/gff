@@ -4,8 +4,8 @@ COMMAND="$1"
 COMMAND_PARAM="$2"
 GFZ_FOLDER="$(dirname "$0")/../lib"
 . "${GFZ_FOLDER}/helpers.sh"
-. "${GFZ_FOLDER}/modules/add.sh"
 . "${GFZ_FOLDER}/modules/checkout.sh"
+. "${GFZ_FOLDER}/modules/chunk.sh"
 . "${GFZ_FOLDER}/modules/pull.sh"
 . "${GFZ_FOLDER}/modules/push.sh"
 . "${GFZ_FOLDER}/modules/remove.sh"
@@ -21,8 +21,8 @@ if [[ -z "$GFZ_EDITOR" ]]; then
 fi
 
 case $COMMAND in
-    "ad")
-        gfz_add
+    "ch")
+        gfz_chunk
         ;;
     "co")
         gfz_checkout
@@ -35,6 +35,9 @@ case $COMMAND in
         ;;
     "h_get_diff_region")
         gfz_get_diff_region "${COMMAND_PARAM}"
+        ;;
+    "h_get_region")
+        gfz_get_region "${@:2}"
         ;;
     "h_get_file_status")
         gfz_get_file_status "${COMMAND_PARAM}"
@@ -50,9 +53,6 @@ case $COMMAND in
         ;;
     "h_toggle_staged")
         gfz_toggle_staged "${COMMAND_PARAM}"
-        ;;
-    "d")
-        git diff
         ;;
     "pl")
         gfz_pull
