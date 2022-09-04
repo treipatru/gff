@@ -151,6 +151,12 @@ gfz_get_file_status () {
         ICON="?"
     fi
 
+    # Special status for modified and unstaged
+    # TODO use better icon
+    if [[ ${STATUS:0:2} == "MM" ]]; then
+        ICON="⍻"
+    fi
+
     echo "${ICON} ${FILE} ${STATUS}"
 }
 
