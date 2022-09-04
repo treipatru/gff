@@ -170,6 +170,7 @@ gfz_get_repo_status () {
 gfz_apply () {
     local PATCH_FILES
     # Only files with _CHUNK_ in filename should be staged
+    # TODO This should use the .patch extension
     PATCH_FILES=$(echo "$@" | awk '{
         for(i=1;i<=NF;i++) {
             if ($i ~ /[_CHUNK_]/) {
