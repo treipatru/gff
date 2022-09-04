@@ -3,10 +3,7 @@
 . "${GFZ_FOLDER}/helpers.sh"
 
 gfz_switch () {
-    local FZF_INPUT
-    local FZF_OUTPUT
-    local CMD_PARAM
-    local CURRENT_BRANCH
+    local FZF_OUTPUT CMD_PARAM CURRENT_BRANCH
 
     CMD_PARAM=$1
     CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)

@@ -3,8 +3,7 @@
 . "${GFZ_FOLDER}/helpers.sh"
 
 gfz_checkout () {
-    local FZF_INPUT
-    local FZF_OUTPUT
+    local FZF_INPUT FZF_OUTPUT
 
     FZF_INPUT=$(git ls-files -d -m --full-name | uniq)
 
@@ -14,6 +13,7 @@ gfz_checkout () {
 
     FZF_OUTPUT=$(echo "$FZF_INPUT" \
         | fzf-tmux \
+            -p 90%,90% \
             --bind 'ctrl-o:execute-silent(gfz h_open_in_editor {1})' \
             --header-first \
             --header 'Checkout modified files' \

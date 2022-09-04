@@ -3,8 +3,7 @@
 . "${GFZ_FOLDER}/helpers.sh"
 
 gfz_status () {
-    local FZF_INPUT
-    local FZF_OUTPUT
+    local FZF_INPUT FZF_OUTPUT
 
     FZF_INPUT=$(gfz h_get_repo_status)
     if [ -z "$FZF_INPUT" ]; then

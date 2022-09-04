@@ -3,8 +3,7 @@
 . "${GFZ_FOLDER}/helpers.sh"
 
 gfz_remove () {
-    local FZF_INPUT
-    local FZF_OUTPUT
+    local FZF_INPUT FZF_OUTPUT
 
     FZF_INPUT=$(git ls-tree --full-tree -r --name-only HEAD)
 

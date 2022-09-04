@@ -1,46 +1,22 @@
 #!/usr/bin/env bash
 
 gfz_emit_error () {
-    local ERROR_CODE
-    local ERROR_STR
+    local ERROR_CODE ERROR_STR
     ERROR_CODE=$1
 
     case $ERROR_CODE in
-        "1")
-            ERROR_STR="Git is not installed"
-            ;;
-        "2")
-            ERROR_STR="FZF is not installed"
-            ;;
-        "3")
-            ERROR_STR="Bat is not installed"
-            ;;
-        "4")
-            ERROR_STR="RG is not installed"
-            ;;
-        "5")
-            ERROR_STR="Not in git repo"
-            ;;
-        "6")
-            ERROR_STR="Nothing to commit, staging area empty"
-            ;;
-        "7")
-            ERROR_STR="Nothing to add, working tree clean"
-            ;;
-        "8")
-            ERROR_STR="Nothing to checkout, working tree clean"
-            ;;
-        "9")
-            ERROR_STR="Unknown GFZ editor"
-            ;;
-        "10")
-            ERROR_STR="Neither \$EDITOR not \$GFZ_EDITOR are defined. You need at least one in your environment"
-            ;;
-        "11")
-            ERROR_STR="Delta is not installed"
-            ;;
-        *)
-            ERROR_STR="GFZ encountered an error"
+        "1")  ERROR_STR="Git is not installed" ;;
+        "2")  ERROR_STR="FZF is not installed" ;;
+        "3")  ERROR_STR="Bat is not installed" ;;
+        "4")  ERROR_STR="RG is not installed" ;;
+        "5")  ERROR_STR="Not in git repo" ;;
+        "6")  ERROR_STR="Nothing to commit, staging area empty" ;;
+        "7")  ERROR_STR="Nothing to add, working tree clean" ;;
+        "8")  ERROR_STR="Nothing to checkout, working tree clean" ;;
+        "9")  ERROR_STR="Unknown GFZ editor" ;;
+        "10") ERROR_STR="Neither \$EDITOR not \$GFZ_EDITOR are defined. You need at least one in your environment" ;;
+        "11") ERROR_STR="Delta is not installed" ;;
+        *)    ERROR_STR="GFZ encountered an error"
     esac
 
     echo "» ${ERROR_STR}"
@@ -80,8 +56,7 @@ gfz_check_environment () {
 }
 
 gfz_toggle_staged () {
-    local FILE
-    local STATUS
+    local FILE STATUS
 
     FILE=$1
     STATUS=$(git status -s "${FILE}" | head -c2)
@@ -115,9 +90,7 @@ has_branch_upstream () {
 }
 
 gfz_open_in_editor () {
-    local FILE
-    local LINE
-    local COLUMN
+    local FILE LINE COLUMN
 
     FILE=$1
     LINE=$2
@@ -157,9 +130,7 @@ gfz_create_or_switch_branch () {
 }
 
 gfz_get_file_status () {
-    local GIT_OUTPUT
-    local FILE
-    local STATUS
+    local GIT_OUTPUT FILE STATUS
     GIT_OUTPUT=$1
     STATUS=${GIT_OUTPUT:0:2}
     FILE=${GIT_OUTPUT:3}
@@ -207,9 +178,7 @@ gfz_apply () {
 }
 
 gfz_get_diff_region () {
-    local CHUNK_HEADER
-    local REMOVED
-    local ADDED
+    local CHUNK_HEADER REMOVED ADDED
 
     CHUNK_HEADER=$1
     # Remove minus sign from start of string
