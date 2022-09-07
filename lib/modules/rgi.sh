@@ -3,8 +3,7 @@
 . "${GFZ_FOLDER}/helpers.sh"
 
 gfz_rg () {
-    local INPUT
-    local RG_PREFIX
+    local INPUT RG_PREFIX
     INPUT=$1
 
     RG_PREFIX="rg \
@@ -34,7 +33,8 @@ gfz_rg () {
     "
     FZF_DEFAULT_COMMAND="$RG_PREFIX $(printf %q "$INPUT")"
 
-    gfz_finder \
+    fzf-tmux \
+        -p 90%,90% \
     | awk -F ":" '{print $1, $2, $3}' \
     | xargs gfz h_open_in_editor
 }
