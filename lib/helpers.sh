@@ -183,30 +183,3 @@ gfz_apply () {
         git apply --cached < "$PATCH_FILE"
     done
 }
-
-gfz_get_diff_region () {
-    local CHUNK_HEADER REMOVED ADDED
-
-    CHUNK_HEADER=$1
-    # Remove minus sign from start of string
-    REMOVED=$(echo "$CHUNK_HEADER" | awk '{print substr($2,2)}')
-    # Remove plus sign from start of string, add number of modified lines to start of added
-    ADDED=$(echo "$CHUNK_HEADER" | awk '{print substr($3,2)}' | awk -F "," '{print $1+$2}')
-
-    # Return diff region: "First line" "Last line"
-    echo "${REMOVED%%,*} ${ADDED}"
-}
-
-gfz_get_region () {
-    local FILE REGION_START REGION_END SHOW_HEAD
-    FILE=$1
-    REGION_START=$2
-    REGION_END=$3
-    SHOW_HEAD=$4
-
-    if [[ $SHOW_HEAD == "TRUE" ]]; then
-        git show HEAD:"$FILE" | sed -n "${REGION_START},${REGION_END}p"
-    else
-        sed -n "${REGION_START},${REGION_END}p" "$FILE"
-    fi
-}
