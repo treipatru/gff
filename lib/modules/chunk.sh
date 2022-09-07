@@ -30,7 +30,7 @@ gfz_chunk () {
         # Generate a folder for each file
         mkdir "$FOLDER"
         # Generate a main diff file for each file
-        git diff-files --patch --unified=0 --output="$FOLDER"/"$FILE" "$LINE"
+        git diff-files --patch --diff-algorithm=minimal --output="$FOLDER"/"$FILE" "$LINE"
         # Generate patch files for each patch
 
         rg '^@@.*@@' --line-number "$FOLDER"/"$FILE" | while IFS= read -r LINE2; do
@@ -43,10 +43,7 @@ gfz_chunk () {
             # Get first line of chunk content
             NEXT_LINE=$(($CHUNK_LINE + 1))
 
-            ## Pass the diff region withoug the rg first column
-            DIFF_REGION=$(gfz h_get_diff_region "${LINE2#*:}")
-
-            echo "${LINE} ${DIFF_REGION} ${CHUNK_FILE}" >> $FZF_ITEMS_FILE
+            echo "${LINE} ${CHUNK_FILE} ${LINE2}" >> $FZF_ITEMS_FILE
 
             # Write file header
             # Git output is always 4 lines
@@ -73,14 +70,13 @@ gfz_chunk () {
             --header 'Stage chunks' \
             --header-first \
             --multi \
-            --preview 'delta \
-                --no-gitconfig \
-                --file-style=\"omit\" \
-                --hunk-header-style=\"\" \
-                <(gfz h_get_region {1} {2} {3} TRUE) \
-                <(gfz h_get_region {1} {2} {3}) '\
+            --preview 'bat \
+                --style changes \
+                --color=always \
+                {2} \
+                | head -500' \
             --preview-window up,border-bottom,80% \
-            --with-nth=1,2,3 \
+            --with-nth=1,3 \
         )
 
     if [[ -z $FZF_SELECTION ]]; then
