@@ -68,7 +68,7 @@ gfz_chunk () {
                 {2} \
                 | head -500' \
             --preview-window up,border-bottom,80% \
-            --with-nth=1,3 \
+            --with-nth=1,3,4 \
         )
 
     if [[ -z $FZF_SELECTION ]]; then
