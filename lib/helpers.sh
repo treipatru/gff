@@ -173,7 +173,7 @@ gfz_apply () {
     # TODO This should use the .patch extension
     PATCH_FILES=$(echo "$@" | awk '{
         for(i=1;i<=NF;i++) {
-            if ($i ~ /[_CHUNK_]/) {
+            if ($i ~ /\.patch$/) {
                 print $i
             }
         }
