@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-. "${GFF_FOLDER}/helpers.sh"
+. "${GFF_FOLDER}/helpers/emit_error.sh"
 
 gff_chunk () {
     local ROOT_DIFF_FOLDER GIT_FILES FZF_ITEMS_FILE FZF_SELECTION

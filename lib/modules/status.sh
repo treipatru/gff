@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-. "${GFF_FOLDER}/helpers.sh"
+. "${GFF_FOLDER}/helpers/emit_error.sh"
 
 gff_status () {
     local FZF_INPUT FZF_OUTPUT

@@ -3,13 +3,9 @@
 COMMAND="$1"
 COMMAND_PARAM="$2"
 GFF_FOLDER="$(dirname "$0")/../lib"
-. "${GFF_FOLDER}/helpers.sh"
-. "${GFF_FOLDER}/modules/checkout.sh"
-. "${GFF_FOLDER}/modules/chunk.sh"
-. "${GFF_FOLDER}/modules/remove.sh"
-. "${GFF_FOLDER}/modules/rgi.sh"
-. "${GFF_FOLDER}/modules/status.sh"
-. "${GFF_FOLDER}/modules/switch.sh"
+
+for module in $GFF_FOLDER/modules/*; do source $module; done
+for helper in $GFF_FOLDER/helpers/*; do source $helper; done
 
 gff_check_environment
 
@@ -46,8 +42,8 @@ case $COMMAND in
     "h_open_in_editor")
         gff_open_in_editor "${@:2}"
         ;;
-    "h_create_or_switch_branch")
-        gff_create_or_switch_branch "${COMMAND_PARAM}"
+    "h_switch_branch")
+        gff_switch_branch "${COMMAND_PARAM}"
         ;;
     "h_toggle_staged")
         gff_toggle_staged "${COMMAND_PARAM}"

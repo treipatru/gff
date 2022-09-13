@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-. "${GFF_FOLDER}/helpers.sh"
-
 gff_switch () {
     local FZF_OUTPUT CMD_PARAM CURRENT_BRANCH
 
@@ -23,5 +21,5 @@ gff_switch () {
             --query="${CMD_PARAM}" \
     )
 
-    gff h_create_or_switch_branch "$FZF_OUTPUT"
+    gff h_switch_branch "$FZF_OUTPUT"
 }

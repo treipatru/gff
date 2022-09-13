@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-. "${GFF_FOLDER}/helpers.sh"
-
 gff_rg () {
     local INPUT RG_PREFIX
     INPUT=$1

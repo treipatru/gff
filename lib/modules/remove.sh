@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-. "${GFF_FOLDER}/helpers.sh"
-
 gff_remove () {
     local FZF_INPUT FZF_OUTPUT
 
