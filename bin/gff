@@ -4,15 +4,11 @@ COMMAND="$1"
 COMMAND_PARAM="$2"
 GFF_FOLDER="$(dirname "$0")/../lib"
 
+source "${GFF_FOLDER}/variables.sh"
 for module in $GFF_FOLDER/modules/*; do source $module; done
 for helper in $GFF_FOLDER/helpers/*; do source $helper; done
 
 gff_check_environment
-
-export GFF_EDITOR="code"
-if [[ -z "$GFF_EDITOR" ]]; then
-    GFF_EDITOR=$(basename "$EDITOR")
-fi
 
 case $COMMAND in
     "ch")

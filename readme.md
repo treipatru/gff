@@ -25,6 +25,10 @@ GFF provides the following commands:
 * `gff st` - stage/unstage files and commit
 * `gff sw` - switch/create branches
 
+## Config
+
+* `GFF_EDITOR` - Editor executable for opening files. Can be `code`|`nvim`|`vim`. Defaults to `$EDITOR`.
+
 ## Dependencies
 
 GFF works only if you have the following already installed:
