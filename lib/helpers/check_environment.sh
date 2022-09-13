@@ -20,16 +20,4 @@ gff_check_environment () {
     if [ "$DIR_CODE" -eq "128" ]; then
        gff_emit_error 5
     fi
-
-    # Finally apply some FZF options if the user has none
-    if [[ -z "$FZF_DEFAULT_OPTS" ]]; then
-        export FZF_DEFAULT_OPTS="
-            --bind 'ctrl-n:preview-half-page-down' \
-            --bind 'ctrl-p:preview-half-page-up' \
-            --no-bold \
-            --prompt='░ ' \
-            --marker='•' \
-            --pointer='▓'
-        "
-    fi
 }
