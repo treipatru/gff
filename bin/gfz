@@ -2,75 +2,75 @@
 
 COMMAND="$1"
 COMMAND_PARAM="$2"
-GFZ_FOLDER="$(dirname "$0")/../lib"
-. "${GFZ_FOLDER}/helpers.sh"
-. "${GFZ_FOLDER}/modules/checkout.sh"
-. "${GFZ_FOLDER}/modules/chunk.sh"
-. "${GFZ_FOLDER}/modules/pull.sh"
-. "${GFZ_FOLDER}/modules/push.sh"
-. "${GFZ_FOLDER}/modules/remove.sh"
-. "${GFZ_FOLDER}/modules/rgi.sh"
-. "${GFZ_FOLDER}/modules/status.sh"
-. "${GFZ_FOLDER}/modules/switch.sh"
+GFF_FOLDER="$(dirname "$0")/../lib"
+. "${GFF_FOLDER}/helpers.sh"
+. "${GFF_FOLDER}/modules/checkout.sh"
+. "${GFF_FOLDER}/modules/chunk.sh"
+. "${GFF_FOLDER}/modules/pull.sh"
+. "${GFF_FOLDER}/modules/push.sh"
+. "${GFF_FOLDER}/modules/remove.sh"
+. "${GFF_FOLDER}/modules/rgi.sh"
+. "${GFF_FOLDER}/modules/status.sh"
+. "${GFF_FOLDER}/modules/switch.sh"
 
-gfz_check_environment
+gff_check_environment
 
-export GFZ_EDITOR="code"
-if [[ -z "$GFZ_EDITOR" ]]; then
-    GFZ_EDITOR=$(basename "$EDITOR")
+export GFF_EDITOR="code"
+if [[ -z "$GFF_EDITOR" ]]; then
+    GFF_EDITOR=$(basename "$EDITOR")
 fi
 
 case $COMMAND in
     "ch")
-        gfz_chunk
+        gff_chunk
         ;;
     "co")
-        gfz_checkout
+        gff_checkout
         ;;
     "h_apply")
-        gfz_apply "${@:2}"
+        gff_apply "${@:2}"
         ;;
     "h_commit")
-        gfz_commit
+        gff_commit
         ;;
     "h_get_diff_region")
-        gfz_get_diff_region "${COMMAND_PARAM}"
+        gff_get_diff_region "${COMMAND_PARAM}"
         ;;
     "h_get_region")
-        gfz_get_region "${@:2}"
+        gff_get_region "${@:2}"
         ;;
     "h_get_file_status")
-        gfz_get_file_status "${COMMAND_PARAM}"
+        gff_get_file_status "${COMMAND_PARAM}"
         ;;
     "h_get_repo_status")
-        gfz_get_repo_status
+        gff_get_repo_status
         ;;
     "h_open_in_editor")
-        gfz_open_in_editor "${@:2}"
+        gff_open_in_editor "${@:2}"
         ;;
     "h_create_or_switch_branch")
-        gfz_create_or_switch_branch "${COMMAND_PARAM}"
+        gff_create_or_switch_branch "${COMMAND_PARAM}"
         ;;
     "h_toggle_staged")
-        gfz_toggle_staged "${COMMAND_PARAM}"
+        gff_toggle_staged "${COMMAND_PARAM}"
         ;;
     "pl")
-        gfz_pull
+        gff_pull
         ;;
     "ps")
-        gfz_push
+        gff_push
         ;;
     "rg")
-        gfz_rg "${COMMAND_PARAM}"
+        gff_rg "${COMMAND_PARAM}"
         ;;
     "rm")
-        gfz_remove
+        gff_remove
         ;;
     "st")
-        gfz_status
+        gff_status
         ;;
     "sw")
-        gfz_switch "${COMMAND_PARAM}"
+        gff_switch "${COMMAND_PARAM}"
         ;;
     *)
         git "${@:1}"

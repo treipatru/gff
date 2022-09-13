@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-. "${GFZ_FOLDER}/helpers.sh"
+. "${GFF_FOLDER}/helpers.sh"
 
 gfz_rg () {
     local INPUT RG_PREFIX

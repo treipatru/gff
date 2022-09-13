@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-. "${GFZ_FOLDER}/helpers.sh"
+. "${GFF_FOLDER}/helpers.sh"
 
-gfz_switch () {
+gff_switch () {
     local FZF_OUTPUT CMD_PARAM CURRENT_BRANCH
 
     CMD_PARAM=$1
@@ -23,5 +23,5 @@ gfz_switch () {
             --query="${CMD_PARAM}" \
     )
 
-    gfz h_create_or_switch_branch "$FZF_OUTPUT"
+    gff h_create_or_switch_branch "$FZF_OUTPUT"
 }

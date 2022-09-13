@@ -1,20 +1,20 @@
 #!/usr/bin/env bash
 
-. "${GFZ_FOLDER}/helpers.sh"
+. "${GFF_FOLDER}/helpers.sh"
 
-gfz_checkout () {
+gff_checkout () {
     local FZF_INPUT FZF_OUTPUT
 
     FZF_INPUT=$(git ls-files -d -m --full-name | uniq)
 
     if [ -z "$FZF_INPUT" ]; then
-        gfz_emit_error 8
+        gff_emit_error 8
     fi
 
     FZF_OUTPUT=$(echo "$FZF_INPUT" \
         | fzf-tmux \
             -p 90%,90% \
-            --bind 'ctrl-o:execute-silent(gfz h_open_in_editor {1})' \
+            --bind 'ctrl-o:execute-silent(gff h_open_in_editor {1})' \
             --header-first \
             --header 'Checkout modified files' \
             --multi \

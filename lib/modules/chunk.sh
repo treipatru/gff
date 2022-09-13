@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-. "${GFZ_FOLDER}/helpers.sh"
+. "${GFF_FOLDER}/helpers.sh"
 
 gfz_chunk () {
     local ROOT_DIFF_FOLDER GIT_FILES FZF_ITEMS_FILE FZF_SELECTION
