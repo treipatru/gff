@@ -2,14 +2,14 @@
 
 . "${GFF_FOLDER}/helpers.sh"
 
-gfz_chunk () {
+gff_chunk () {
     local ROOT_DIFF_FOLDER GIT_FILES FZF_ITEMS_FILE FZF_SELECTION
     GIT_FILES=$(git diff --name-only --diff-filter=MA)
-    ROOT_DIFF_FOLDER="/tmp/gfz_diff"
+    ROOT_DIFF_FOLDER="/tmp/gff_diff"
     FZF_ITEMS_FILE="${ROOT_DIFF_FOLDER}/FZF_ITEMS"
 
     if [ -z "$GIT_FILES" ]; then
-        gfz_emit_error 7
+        gff_emit_error 7
     fi
 
     rm -rf $ROOT_DIFF_FOLDER
@@ -57,7 +57,7 @@ gfz_chunk () {
     FZF_SELECTION=$(cat $FZF_ITEMS_FILE \
         | fzf-tmux \
             -p 90%,90% \
-            --bind 'ctrl-o:execute-silent(gfz h_open_in_editor {1})' \
+            --bind 'ctrl-o:execute-silent(gff h_open_in_editor {1})' \
             --bind backward-eof:abort \
             --header 'Stage chunks' \
             --header-first \
@@ -76,6 +76,6 @@ gfz_chunk () {
     fi
 
     echo "$FZF_SELECTION" \
-        | xargs gfz h_apply \
-        && gfz h_commit
+        | xargs gff h_apply \
+        && gff h_commit
 }

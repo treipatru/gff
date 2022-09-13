@@ -2,7 +2,7 @@
 
 . "${GFF_FOLDER}/helpers.sh"
 
-gfz_rg () {
+gff_rg () {
     local INPUT RG_PREFIX
     INPUT=$1
 
@@ -29,12 +29,12 @@ gfz_rg () {
         --bind 'change:reload:sleep 0.1; $RG_PREFIX {q} || true' \
         --bind 'ctrl-f:unbind(change,ctrl-f)+change-prompt(░FZF )+enable-search+clear-query+rebind(ctrl-r)' \
         --bind 'ctrl-r:unbind(ctrl-r)+change-prompt(░RG )+disable-search+reload($RG_PREFIX {q} || true)+rebind(change,ctrl-f)' \
-        --bind 'ctrl-o:execute-silent(gfz h_open_in_editor {1} {2} {3})' \
+        --bind 'ctrl-o:execute-silent(gff h_open_in_editor {1} {2} {3})' \
     "
     FZF_DEFAULT_COMMAND="$RG_PREFIX $(printf %q "$INPUT")"
 
     fzf-tmux \
         -p 90%,90% \
     | awk -F ":" '{print $1, $2, $3}' \
-    | xargs gfz h_open_in_editor
+    | xargs gff h_open_in_editor
 }

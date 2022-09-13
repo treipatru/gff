@@ -2,7 +2,7 @@
 
 . "${GFF_FOLDER}/helpers.sh"
 
-gfz_remove () {
+gff_remove () {
     local FZF_INPUT FZF_OUTPUT
 
     FZF_INPUT=$(git ls-tree --full-tree -r --name-only HEAD)
@@ -10,7 +10,7 @@ gfz_remove () {
     FZF_OUTPUT=$(echo "$FZF_INPUT" \
         | fzf-tmux \
             -p 90%,90% \
-            --bind 'ctrl-o:execute-silent(gfz h_open_in_editor {1})' \
+            --bind 'ctrl-o:execute-silent(gff h_open_in_editor {1})' \
             --header-first \
             --header 'Git rm files' \
             --multi \
