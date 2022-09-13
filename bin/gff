@@ -55,7 +55,7 @@ case $COMMAND in
         gff_remove
         ;;
     "st")
-        gff_status
+        gff_stage
         ;;
     "sw")
         gff_switch "${COMMAND_PARAM}"

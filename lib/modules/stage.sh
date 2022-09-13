@@ -2,7 +2,7 @@
 
 . "${GFF_FOLDER}/helpers/emit_error.sh"
 
-gff_status () {
+gff_stage () {
     local FZF_INPUT FZF_OUTPUT
 
     FZF_INPUT=$(gff h_get_repo_status)
