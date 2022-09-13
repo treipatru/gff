@@ -13,11 +13,4 @@ gff_check_environment () {
     if [[ -z "$EDITOR" && -z "$GFF_EDITOR" ]]; then
         gff_emit_error 10
     fi
-
-    # Check for Git repository
-    local DIR_CODE
-    DIR_CODE=$(git -C . rev-parse 2>/dev/null; echo $?)
-    if [ "$DIR_CODE" -eq "128" ]; then
-       gff_emit_error 5
-    fi
 }

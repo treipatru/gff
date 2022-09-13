@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
 
+. "${GFF_FOLDER}/helpers/check_git_repo.sh"
 . "${GFF_FOLDER}/helpers/emit_error.sh"
 
 gff_chunk () {
+    gff_check_git_repo
+
     local ROOT_DIFF_FOLDER GIT_FILES FZF_ITEMS_FILE FZF_SELECTION
     GIT_FILES=$(git diff --name-only --diff-filter=MA)
     ROOT_DIFF_FOLDER="/tmp/gff_diff"

@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
 
+. "${GFF_FOLDER}/helpers/check_git_repo.sh"
 . "${GFF_FOLDER}/helpers/emit_error.sh"
 
 gff_checkout () {
+    gff_check_git_repo
+
     local FZF_INPUT FZF_OUTPUT
 
     FZF_INPUT=$(git ls-files -d -m --full-name | uniq)

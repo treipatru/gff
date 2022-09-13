@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 
+. "${GFF_FOLDER}/helpers/check_git_repo.sh"
+
 gff_switch () {
+    gff_check_git_repo
+
     local FZF_OUTPUT CMD_PARAM CURRENT_BRANCH
 
     CMD_PARAM=$1

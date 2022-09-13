@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 
+. "${GFF_FOLDER}/helpers/check_git_repo.sh"
+
 gff_remove () {
+    gff_check_git_repo
+
     local FZF_INPUT FZF_OUTPUT
 
     FZF_INPUT=$(git ls-tree --full-tree -r --name-only HEAD)
