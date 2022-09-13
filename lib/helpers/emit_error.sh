@@ -19,6 +19,6 @@ gff_emit_error () {
         *)    ERROR_STR="GFF encountered an error"
     esac
 
-    echo "» ${ERROR_STR}"
+    printf "» ${ERROR_STR} %s" ${@:2}
     exit 1
 }
