@@ -6,8 +6,6 @@ GFF_FOLDER="$(dirname "$0")/../lib"
 . "${GFF_FOLDER}/helpers.sh"
 . "${GFF_FOLDER}/modules/checkout.sh"
 . "${GFF_FOLDER}/modules/chunk.sh"
-. "${GFF_FOLDER}/modules/pull.sh"
-. "${GFF_FOLDER}/modules/push.sh"
 . "${GFF_FOLDER}/modules/remove.sh"
 . "${GFF_FOLDER}/modules/rgi.sh"
 . "${GFF_FOLDER}/modules/status.sh"
@@ -53,12 +51,6 @@ case $COMMAND in
         ;;
     "h_toggle_staged")
         gff_toggle_staged "${COMMAND_PARAM}"
-        ;;
-    "pl")
-        gff_pull
-        ;;
-    "ps")
-        gff_push
         ;;
     "rg")
         gff_rg "${COMMAND_PARAM}"
