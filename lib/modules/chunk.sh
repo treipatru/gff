@@ -25,7 +25,12 @@ gff_chunk () {
 
         # Make directory for each GIT_FILE and generate a main diff
         mkdir "${DIFF_FILE%\/*}"
-        git diff-files --patch --diff-algorithm=minimal --output="$DIFF_FILE" "$GIT_FILE"
+        git diff-files \
+            --patch \
+            --diff-algorithm=minimal \
+            --unified=1 \
+            --inter-hunk-context=1 \
+            --output="$DIFF_FILE" "$GIT_FILE"
 
         # Generate patch files for each patch
         rg '^@@.*@@' --line-number "$DIFF_FILE" | while IFS= read -r CHUNK_HEADER; do
